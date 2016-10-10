@@ -1,13 +1,23 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="UTF-8" />
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="author" content="Ľuboš Babocký">
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+		<link rel="stylesheet" type="text/css" href="{{asset('css/bootstrap.min.css')}}">
+		<link rel="stylesheet" type="text/css" href="{{asset('css/main.css')}}">
+		
+        <title>{% block title %}Appointments manager{% endblock %}</title>
+        {% block stylesheets %}{% endblock %}
     </head>
     <body>
         {% block body %}{% endblock %}
         {% block javascripts %}{% endblock %}
+
+		<script src="{{asset('js/jquery-3.0.0.min.js')}}"></script>
+		<script src="{{asset('js/main.js')}}"></script>
+		<script src="{{asset('js/bootstrap.min.js')}}"></script>
     </body>
 </html>
