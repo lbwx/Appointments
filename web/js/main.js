@@ -40,4 +40,50 @@ var modalForms = {
 $(function (){
 	$(document).on('submit', '.fos_user_registration_register', function(e){ modalForms.registrationSubmit(e);});
 	$(document).on('submit', '#app-form-login', function(e){ modalForms.loginSubmit(e);});
+	var year = new Date().getFullYear();
+	var month = new Date().getMonth();
+	var day = new Date().getDate();
+	var eventData = {
+		events : [
+			{'id':1, 'start': new Date(year, month, day, 12), 'end': new Date(year, month, day, 12, 15),'title':'Lunch with Mike'}
+		]
+	};
+	$('#calendar').weekCalendar({
+		preventDragOnEventCreation: true,
+		title: '%start%',
+		timeslotsPerHour: 4,
+		hourLine: false,
+		data: eventData,
+		defaultEventLength: 1,
+		alwaysDisplayTimeMinutes: false,
+		daysToShow: 5,
+		use24Hour: false,
+		dateFormat: 'M d, Y',
+		newEventText: 'Reserved',
+		minDate: new Date(year, month, day+1),
+		maxDate: new Date(year, month+1, day),
+		draggable: function(calEvent, element) {
+		  return true;
+		},
+		resizable: function(calEvent, element) {
+		  return false;
+		},
+		businessHours: {start: 8, end: 16, limitDisplay: true},
+		height: function($calendar) {
+		  return $(window).height() - $('h1').outerHeight(true);
+		},
+		eventRender : function(calEvent, $event) {
+		  if (calEvent.end.getTime() < new Date().getTime()) {
+			$event.css('backgroundColor', '#aaa');
+			$event.find('.time').css({'backgroundColor': '#ccc', 'border':'1px solid #888'});
+		  }
+		},
+		eventNew: function(calEvent, $event) { displayMessage('<strong>Added event</strong><br/>Start: ' + calEvent.start + '<br/>End: ' + calEvent.end); },
+		eventDrop: function(calEvent, $event) { displayMessage('<strong>Moved Event</strong><br/>Start: ' + calEvent.start + '<br/>End: ' + calEvent.end); },
+		eventResize: function(calEvent, $event) { displayMessage('<strong>Resized Event</strong><br/>Start: ' + calEvent.start + '<br/>End: ' + calEvent.end); },
+		eventClick: function(calEvent, $event) { displayMessage('<strong>Clicked Event</strong><br/>Start: ' + calEvent.start + '<br/>End: ' + calEvent.end); },
+		eventMouseover: function(calEvent, $event) { displayMessage('<strong>Mouseover Event</strong><br/>Start: ' + calEvent.start + '<br/>End: ' + calEvent.end); },
+		eventMouseout: function(calEvent, $event) { displayMessage('<strong>Mouseout Event</strong><br/>Start: ' + calEvent.start + '<br/>End: ' + calEvent.end); },
+		noEvents: function() { displayMessage('There are no events for this week'); }
+	});
 });
