@@ -1,0 +1,40 @@
+page:
+    button:
+        login: 'LogIn'
+        logout: 'LogOut'
+        register: 'Registration'
+        ok: 'OK'
+
+form:
+    login:
+        username:
+            label: 'Username'
+            placeholder: 'Enter username'
+        password:
+            label: 'Password'
+            placeholder: 'Enter password'
+        remember_me:
+            label: 'Remember me'
+        submit: 'Log In'
+    registration:
+        username:
+            label: 'Username:'
+            placeholder: 'Enter username'
+        email:
+            label: 'Email:'
+            placeholder: 'Enter email address'
+        password1:
+            label: 'Password:'
+            placeholder: 'Enter password'
+        password2:
+            label: 'Repeat password'
+            placeholder: 'Enter password again'
+        submit: 'Register'
+
+messages:
+    login:
+        success: 'Welcome %username%, you was successfully logged in'
+    registration:
+        success: 'Congrats %username%, your account was created successfully'
+    page:
+        logged_as: 'Logged in as %username%'

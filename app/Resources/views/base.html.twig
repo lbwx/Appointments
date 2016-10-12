@@ -13,7 +13,46 @@
         {% block stylesheets %}{% endblock %}
     </head>
     <body>
+		<nav class="navbar navbar-default">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse" aria-expanded="false">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="#">Brand</a>
+				</div>
+				<div class="collapse navbar-collapse" id="app-navbar-collapse">
+					<ul class="nav navbar-nav navbar-right">
+						{%if not is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+							<li><a href="javascript:modalForms.login();">{{'page.button.login'|trans}}</a></li>
+							<li><a href="javascript:modalForms.register();">{{'page.button.register'|trans}}</a></li>
+						{%else%}
+							<li><a>{{'messages.page.logged_as'|trans({'%username%': app.user.username})}}</a></li>
+							<li><a href="{{path('fos_user_security_logout')}}">{{'page.button.logout'|trans}}</a></li>
+						{%endif%}
+					</ul>
+				</div> 
+			</div>
+		</nav>
+
         {% block body %}{% endblock %}
+
+		<div class="modal fade" role="dialog" id="app-modal-window">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title">&nbsp;</h4>
+					</div>
+					<div class="modal-body">
+						
+					</div>
+				</div>
+			</div>
+		</div>
         {% block javascripts %}{% endblock %}
 
 		<script src="{{asset('js/jquery-3.0.0.min.js')}}"></script>
