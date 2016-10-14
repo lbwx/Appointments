@@ -37,53 +37,63 @@ var modalForms = {
 	}
 };
 
+var appointment = {
+	ajaxCall: function(data) {
+		$.ajax({
+			url: "/appointment/" + data.action,
+			type: 'POST',
+			data: {param: JSON.stringify(data.data)},
+			dataType: 'json',
+			success: function (result) {
+				if(result.status === true) {
+					$('#calendar').fullCalendar('renderEvent', result.response, true);
+					$('#calendar').fullCalendar('unselect');
+				} else {
+					alert(result.response);
+				}
+			},
+			error: function (error) {
+				alert('Ooos, something went wrong!');
+				console.log(error);
+			}
+		});
+		
+	},
+};
+
 $(function (){
 	$(document).on('submit', '.fos_user_registration_register', function(e){ modalForms.registrationSubmit(e);});
 	$(document).on('submit', '#app-form-login', function(e){ modalForms.loginSubmit(e);});
-	var year = new Date().getFullYear();
-	var month = new Date().getMonth();
-	var day = new Date().getDate();
-	var eventData = {
-		events : [
-			{'id':1, 'start': new Date(year, month, day, 12), 'end': new Date(year, month, day, 12, 15),'title':'Lunch with Mike'}
-		]
-	};
-	$('#calendar').weekCalendar({
-		preventDragOnEventCreation: true,
-		title: '%start%',
-		timeslotsPerHour: 4,
-		hourLine: false,
-		data: eventData,
-		defaultEventLength: 1,
-		alwaysDisplayTimeMinutes: false,
-		daysToShow: 5,
-		use24Hour: false,
-		dateFormat: 'M d, Y',
-		newEventText: 'Reserved',
-		minDate: new Date(year, month, day+1),
-		maxDate: new Date(year, month+1, day),
-		draggable: function(calEvent, element) {
-		  return true;
+	$('#calendar').fullCalendar({
+		header: {
+			left: 'prev,today,next',
+			center: 'title',
+			right: 'prev,today,next'
 		},
-		resizable: function(calEvent, element) {
-		  return false;
+		timeFormat: 'h:mm',
+		columnFormat: 'dddd D.M.Y',
+		titleFormat: 'DD.MMMM YYYY',
+		weekends: false,
+		minTime: "08:00:00",
+		maxTime: "16:00:00",
+		slotDuration: '00:30:00',
+		defaultTimedEventDuration: '00:30:00',
+		allDaySlot: false,
+		defaultView: 'agendaWeek',
+		displayEventEnd: true,
+		eventDurationEditable: false,
+		editable: false,
+		selectable: true,
+		select: function(start) {
+			appointment.ajaxCall({action: 'create', data: start});
+			//$('#calendar').fullCalendar('renderEvent', eventData, true);
+			//$('#calendar').fullCalendar('unselect');
 		},
-		businessHours: {start: 8, end: 16, limitDisplay: true},
-		height: function($calendar) {
-		  return $(window).height() - $('h1').outerHeight(true);
-		},
-		eventRender : function(calEvent, $event) {
-		  if (calEvent.end.getTime() < new Date().getTime()) {
-			$event.css('backgroundColor', '#aaa');
-			$event.find('.time').css({'backgroundColor': '#ccc', 'border':'1px solid #888'});
-		  }
-		},
-		eventNew: function(calEvent, $event) { displayMessage('<strong>Added event</strong><br/>Start: ' + calEvent.start + '<br/>End: ' + calEvent.end); },
-		eventDrop: function(calEvent, $event) { displayMessage('<strong>Moved Event</strong><br/>Start: ' + calEvent.start + '<br/>End: ' + calEvent.end); },
-		eventResize: function(calEvent, $event) { displayMessage('<strong>Resized Event</strong><br/>Start: ' + calEvent.start + '<br/>End: ' + calEvent.end); },
-		eventClick: function(calEvent, $event) { displayMessage('<strong>Clicked Event</strong><br/>Start: ' + calEvent.start + '<br/>End: ' + calEvent.end); },
-		eventMouseover: function(calEvent, $event) { displayMessage('<strong>Mouseover Event</strong><br/>Start: ' + calEvent.start + '<br/>End: ' + calEvent.end); },
-		eventMouseout: function(calEvent, $event) { displayMessage('<strong>Mouseout Event</strong><br/>Start: ' + calEvent.start + '<br/>End: ' + calEvent.end); },
-		noEvents: function() { displayMessage('There are no events for this week'); }
+		events: [{
+			title: 'Reserved',
+			start: '2016-10-13T10:30:00',
+			end: '2016-10-13T11:00:00',
+			color: 'red'
+		}]
 	});
 });

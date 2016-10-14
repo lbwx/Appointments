@@ -6,11 +6,15 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<meta name="author" content="Ľuboš Babocký">
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
-		<link rel="stylesheet" type="text/css" href="{{asset('css/jquery-ui-1.8.11.custom.css')}}">
-		<link rel="stylesheet" type="text/css" href="{{asset('weekcalendar/jquery.weekcalendar.css')}}">
+		<link rel="stylesheet" type="text/css" href="{{asset('fullcalendar-3.0.1/fullcalendar.css')}}">
 		<link rel="stylesheet" type="text/css" href="{{asset('css/bootstrap.min.css')}}">
 		<link rel="stylesheet" type="text/css" href="{{asset('css/main.css')}}">
-		
+		<script src="{{asset('fullcalendar-3.0.1/lib/moment.min.js')}}"></script>
+		<script src="{{asset('js/jquery-3.0.0.min.js')}}"></script>
+		<script src="{{asset('fullcalendar-3.0.1/fullcalendar.min.js')}}"></script>
+		<script src="{{asset('fullcalendar-3.0.1/locale/de-at.js')}}"></script>
+		<script src="{{asset('js/main.js')}}"></script>
+		<script src="{{asset('js/bootstrap.min.js')}}"></script>
         <title>{% block title %}Appointments manager{% endblock %}</title>
         {% block stylesheets %}{% endblock %}
     </head>
@@ -56,12 +60,5 @@
 			</div>
 		</div>
         {% block javascripts %}{% endblock %}
-
-		<script src="{{asset('js/jquery-3.0.0.min.js')}}"></script>
-		<script src="{{asset('js/jquery-ui-1.8.11.custom.min.js')}}"></script>
-	{#	<script src="{{asset('weekcalendar/date.js')}}"></script>	#}
-		<script src="{{asset('weekcalendar/jquery.weekcalendar.js')}}"></script>
-		<script src="{{asset('js/main.js')}}"></script>
-		<script src="{{asset('js/bootstrap.min.js')}}"></script>
     </body>
 </html>
